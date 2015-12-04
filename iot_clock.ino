@@ -18,8 +18,8 @@ int eepromAddTimeShift = 1;
 /*
 Handsmode:
 
-curl https://api.particle.io/v1/devices/43002e001147343339383037/setHaMode -d access_token=68ac7f91a8d33a696ad5d84d7f3d7d6c104c87d3 -d params=8
-curl 'https://api.particle.io/v1/devices/43002e001147343339383037/getHaMode?access_token=68ac7f91a8d33a696ad5d84d7f3d7d6c104c87d3'
+curl https://api.particle.io/v1/devices/<particle ID>/setHaMode -d access_token= -d params=8
+curl 'https://api.particle.io/v1/devices/<particle ID>/getHaMode?access_token=<access_token>'
 
 Binary        | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | 1
 Reverse       | 0 0 0 0 | 0 0 0 0 | 1 1 1 1 | 1 1 1 1 | X
