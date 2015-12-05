@@ -1,4 +1,3 @@
-#include "neopixel.h"
 #include <math.h>
 
 #include <algorithm>
@@ -8,18 +7,16 @@
 #define PIXEL_COUNT 60
 #define PIXEL_TYPE WS2812B
 
+#include "libs/neopixel.h"
+
+
 // thanks stackoverflow
 #define CHECK_BIT(var,pos) !!((var) & (1<<(static_cast<int>(pos))))
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(PIXEL_COUNT, PIXEL_PIN, PIXEL_TYPE);
 
-int eepromAddTimeShift = 1;
-
 /*
 Handsmode:
-
-curl https://api.particle.io/v1/devices/43002e001147343339383037/setHaMode -d access_token=68ac7f91a8d33a696ad5d84d7f3d7d6c104c87d3 -d params=8
-curl 'https://api.particle.io/v1/devices/43002e001147343339383037/getHaMode?access_token=68ac7f91a8d33a696ad5d84d7f3d7d6c104c87d3'
 
 Binary        | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | 0 0 0 0 | 1
 Reverse       | 0 0 0 0 | 0 0 0 0 | 1 1 1 1 | 1 1 1 1 | X
@@ -77,13 +74,14 @@ void setup(){
   strip.begin();
   strip.clear();
   strip.setBrightness(brightness);
-  //timeShift = EEPROM.read(eepromAddTimeShift);
 
   Time.zone(timeShift);
   isConnected = 2;
 
   randomSeed(Time.second());
   randomMode("");
+  RGB.control(true);
+  RGB.color(0,0,0);
 }
 
 void loop(){
@@ -414,36 +412,3 @@ int randomMode(String command){
   secondHue = random(359);
   return handsMode;
 }
-
-/*
-
-int setConfig(String command){
-  char[] =
-  char* par = strtok(command, ":");
-  int indx = 0;
-  int[5] pars;
-  while (par != 0)
-  {
-    // Split the command in two valuesa
-    char* separator = strchr(par, '=');
-    if (separator != 0)
-    {
-      // Actually split the string in 2: replace ':' with 0
-      *separator = 0;
-      ++separator;
-      pars[indx] = atoi(par);
-      indx++;
-      // Do something with servoId and position
-    }
-    // Find the next command in input string
-    par = strtok(0, ":");
-  }
-  handsMode = pars[0];
-  hourHue = pars[1];
-  minuteHue = pars[2];
-  secondHue = pars[3];
-  brightness = pars[4];
-
-  return handsMode;
-}
-*/
